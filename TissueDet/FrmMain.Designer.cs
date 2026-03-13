@@ -491,19 +491,17 @@
             // 
             // devCountBarChart
             // 
-            this.devCountBarChart.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
             this.devCountBarChart.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.devCountBarChart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.devCountBarChart.LegendFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.devCountBarChart.Location = new System.Drawing.Point(12, 120);
             this.devCountBarChart.MinimumSize = new System.Drawing.Size(1, 1);
             this.devCountBarChart.Name = "devCountBarChart";
             this.devCountBarChart.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
-            this.devCountBarChart.RectColor = System.Drawing.Color.Gray;
             this.devCountBarChart.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
-            this.devCountBarChart.Size = new System.Drawing.Size(320, 213);
+            this.devCountBarChart.Size = new System.Drawing.Size(320, 210);
             this.devCountBarChart.SubFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.devCountBarChart.TabIndex = 4;
+            this.devCountBarChart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uiLabel11
             // 
@@ -557,7 +555,7 @@
             this.MPanel.AutoSize = true;
             this.MPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MPanel.Location = new System.Drawing.Point(0, 0);
-            this.MPanel.Margin = new System.Windows.Forms.Padding(87, 87, 87, 87);
+            this.MPanel.Margin = new System.Windows.Forms.Padding(116, 116, 116, 116);
             this.MPanel.Name = "MPanel";
             this.MPanel.Size = new System.Drawing.Size(898, 558);
             this.MPanel.TabIndex = 7;
@@ -614,7 +612,7 @@
             // 
             // Timer1
             // 
-            this.Timer1.Interval = 200;
+            this.Timer1.Interval = 500;
             this.Timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // uiLabel4

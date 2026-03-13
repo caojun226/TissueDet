@@ -151,5 +151,8 @@
   <ItemGroup>
     <Content Include="图标.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ui\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

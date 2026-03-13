@@ -16,10 +16,55 @@ namespace TissueDet
 {
     public partial class FrmMain : UIForm
     {
+
+        private UIBarOption option;
         public FrmMain()
         {
             InitializeComponent();
+
+            //初始化柱状图
+            // 初始化柱状图配置（示例）
+            option = new UIBarOption();
+
+            // 标题
+            option.Title = new UITitle
+            {
+                Text = "",
+                SubText = ""
+            };
+
+            // 图例
+            option.Legend = new UILegend();
+            option.Legend.AddData("缺陷数");  // 系列名称
+
+            // 创建一个系列
+            var series = new UIBarSeries
+            {
+                Name = "缺陷数"
+            };
+
+            // 先初始化几个数据点，比如 5 个
+            for (int i = 0; i < 5; i++)
+            {
+                series.AddData(0); // 先填 0，后面再更新
+            }
+
+            option.Series.Add(series);
+
+            // X 轴标签（和上面 5 个数据对应）
+            for (int i = 1; i <= 5; i++)
+            {
+                option.XAxis.Data.Add($"vs{i}");
+            }
+
+            option.YAxis.Name = "数量";
+            option.XAxis.Name = "组件";
+
+            // 应用配置
+            devCountBarChart.SetOption(option);
         }
+
+
         System.Timers.Timer timeTimer;
         /// <summary>
         /// 系统初始化加载
@@ -69,7 +114,6 @@ namespace TissueDet
                 bool r = false;
                 foreach (string sol in Sols)
                 {
-                    var a = ExtHandler.GetAutoLoadSolName();
                     if (sol == ExtHandler.GetAutoLoadSolName())
                     {
                         r = true;
@@ -154,10 +198,34 @@ namespace TissueDet
             {
                 try
                 {
-                    this.Invoke(new Action(() =>
+                    // All UI updates must run on the UI thread because this Elapsed
+                    // handler runs on a thread-pool thread (System.Timers.Timer).
+                    this.BeginInvoke(new Action(() =>
                     {
                         lblDate.Text = DateTime.Now.ToString("yyyy-MM-dd    HH:mm:ss");
+
+                        // 缺陷数
+                        if (option == null) return;
+                        if (option.Series == null || option.Series.Count == 0) return;
+
+                        var series = option.Series[0] as UIBarSeries;
+                        if (series == null) return;
+
+                        if (ExtHandler.IsLoad)
+                        {
+                            // 先清空旧数据
+                            series.Clear();
+                            series.AddData(ExtHandler.GetGlobalVar<Int32>("vs1"));
+                            series.AddData(ExtHandler.GetGlobalVar<Int32>("vs2"));
+                            series.AddData(ExtHandler.GetGlobalVar<Int32>("vs3"));
+                            series.AddData(ExtHandler.GetGlobalVar<Int32>("vs4"));
+                            series.AddData(ExtHandler.GetGlobalVar<Int32>("vs5"));
+                            devCountBarChart.SetOption(option);
+                        }
                     }));
+
+
+
                 }
                 catch
                 {
@@ -171,8 +239,17 @@ namespace TissueDet
         private void RefreshDeviceCountStat()
         {
             UIBarOption barOption = devCountBarChart.Option;
-            barOption.Series[1].Clear();
-            barOption.Series[2].Clear();
+            if (barOption?.Series != null)
+            {
+                if (barOption.Series.Count > 1 && barOption.Series[1] != null)
+                {
+                    barOption.Series[1].Clear();
+                }
+                if (barOption.Series.Count > 2 && barOption.Series[2] != null)
+                {
+                    barOption.Series[2].Clear();
+                }
+            }
             devCountBarChart.SetOption(barOption);
         }
 
@@ -228,8 +305,26 @@ namespace TissueDet
         //关闭
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Timer1.Stop();
-            timeTimer.Stop();
+            try
+            {
+                Timer1?.Stop();
+            }
+            catch { }
+
+            try
+            {
+                if (timeTimer != null)
+                {
+                    timeTimer.Stop();
+                    timeTimer.Dispose();
+                    timeTimer = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogNet.Error(ex.ToString());
+            }
+
             this.Close();
         }
 
@@ -378,7 +473,6 @@ namespace TissueDet
             }
         }
 
-
         /// <summary>
         /// 速度设置
         /// </summary>
@@ -389,8 +483,16 @@ namespace TissueDet
             var r = EComManageer.GetECommunication("ModbusTcpNet0");
             if (r.status)
             {
-                short speed = txtSpeed.Text.ToShort();
-                EComManageer.Write<float>("ModbusTcpNet0", "1000", speed);
+                // 目标寄存器为 float（Read<float> 在 ReadSpeed 中使用），
+                // 所以这里解析为 float 并写回。
+                float speedValue = 0f;
+                if (!float.TryParse(txtSpeed.Text, out speedValue))
+                {
+                    this.ShowErrorDialog("速度格式不正确");
+                    return;
+                }
+
+                EComManageer.Write<float>("ModbusTcpNet0", "1000", speedValue);
             }
             else
             {
