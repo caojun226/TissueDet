@@ -105,6 +105,9 @@
     <Compile Include="FrmMain.designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmStatisticsDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmRegister.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,8 +154,6 @@
   <ItemGroup>
     <Content Include="图标.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ui\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

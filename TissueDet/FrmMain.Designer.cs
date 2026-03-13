@@ -54,7 +54,7 @@
             this.uiLine6 = new Sunny.UI.UILine();
             this.devCountBarChart = new Sunny.UI.UIBarChart();
             this.uiLabel11 = new Sunny.UI.UILabel();
-            this.rpDevBreadDown = new Sunny.UI.UIRoundProcess();
+            this.rpPassRate = new Sunny.UI.UIRoundProcess();
             this.uiPanel1 = new Sunny.UI.UIPanel();
             this.MPanel = new ImageControl.ViewPanel();
             this.btnStop = new Sunny.UI.UISymbolButton();
@@ -66,6 +66,8 @@
             this.btnSpeedSet = new Sunny.UI.UISymbolButton();
             this.uiLabel9 = new Sunny.UI.UILabel();
             this.uiLabel12 = new Sunny.UI.UILabel();
+            this.uilabok = new Sunny.UI.UIDigitalLabel();
+            this.uilabng = new Sunny.UI.UIDigitalLabel();
             this.panelTop.SuspendLayout();
             this.uiPanel1.SuspendLayout();
             this.uiPanel2.SuspendLayout();
@@ -508,30 +510,30 @@
             this.uiLabel11.AutoSize = true;
             this.uiLabel11.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiLabel11.ForeColor = System.Drawing.Color.Silver;
-            this.uiLabel11.Location = new System.Drawing.Point(230, 534);
+            this.uiLabel11.Location = new System.Drawing.Point(251, 554);
             this.uiLabel11.Name = "uiLabel11";
             this.uiLabel11.Size = new System.Drawing.Size(51, 19);
             this.uiLabel11.TabIndex = 1;
             this.uiLabel11.Text = "合格率";
             // 
-            // rpDevBreadDown
+            // rpPassRate
             // 
-            this.rpDevBreadDown.DecimalPlaces = 0;
-            this.rpDevBreadDown.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rpDevBreadDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.rpDevBreadDown.ForeColor2 = System.Drawing.Color.Black;
-            this.rpDevBreadDown.Inner = 35;
-            this.rpDevBreadDown.Location = new System.Drawing.Point(197, 403);
-            this.rpDevBreadDown.MinimumSize = new System.Drawing.Size(1, 1);
-            this.rpDevBreadDown.Name = "rpDevBreadDown";
-            this.rpDevBreadDown.ProcessBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.rpDevBreadDown.ProcessColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rpDevBreadDown.ShowProcess = true;
-            this.rpDevBreadDown.Size = new System.Drawing.Size(120, 120);
-            this.rpDevBreadDown.Style = Sunny.UI.UIStyle.Custom;
-            this.rpDevBreadDown.TabIndex = 5;
-            this.rpDevBreadDown.Text = "25%";
-            this.rpDevBreadDown.Value = 25;
+            this.rpPassRate.DecimalPlaces = 0;
+            this.rpPassRate.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rpPassRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.rpPassRate.ForeColor2 = System.Drawing.Color.Black;
+            this.rpPassRate.Inner = 35;
+            this.rpPassRate.Location = new System.Drawing.Point(218, 422);
+            this.rpPassRate.MinimumSize = new System.Drawing.Size(1, 1);
+            this.rpPassRate.Name = "rpPassRate";
+            this.rpPassRate.ProcessBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.rpPassRate.ProcessColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.rpPassRate.ShowProcess = true;
+            this.rpPassRate.Size = new System.Drawing.Size(120, 120);
+            this.rpPassRate.Style = Sunny.UI.UIStyle.Custom;
+            this.rpPassRate.TabIndex = 5;
+            this.rpPassRate.Text = "25%";
+            this.rpPassRate.Value = 25;
             // 
             // uiPanel1
             // 
@@ -555,7 +557,7 @@
             this.MPanel.AutoSize = true;
             this.MPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MPanel.Location = new System.Drawing.Point(0, 0);
-            this.MPanel.Margin = new System.Windows.Forms.Padding(116, 116, 116, 116);
+            this.MPanel.Margin = new System.Windows.Forms.Padding(155, 155, 155, 155);
             this.MPanel.Name = "MPanel";
             this.MPanel.Size = new System.Drawing.Size(898, 558);
             this.MPanel.TabIndex = 7;
@@ -675,9 +677,9 @@
             this.uiLabel9.ForeColor = System.Drawing.Color.Silver;
             this.uiLabel9.Location = new System.Drawing.Point(5, 450);
             this.uiLabel9.Name = "uiLabel9";
-            this.uiLabel9.Size = new System.Drawing.Size(69, 26);
+            this.uiLabel9.Size = new System.Drawing.Size(60, 26);
             this.uiLabel9.TabIndex = 24;
-            this.uiLabel9.Text = "产量：";
+            this.uiLabel9.Text = "OK：";
             // 
             // uiLabel12
             // 
@@ -686,9 +688,35 @@
             this.uiLabel12.ForeColor = System.Drawing.Color.Silver;
             this.uiLabel12.Location = new System.Drawing.Point(5, 519);
             this.uiLabel12.Name = "uiLabel12";
-            this.uiLabel12.Size = new System.Drawing.Size(69, 26);
+            this.uiLabel12.Size = new System.Drawing.Size(62, 26);
             this.uiLabel12.TabIndex = 25;
-            this.uiLabel12.Text = "剔除：";
+            this.uiLabel12.Text = "NG：";
+            // 
+            // uilabok
+            // 
+            this.uilabok.BackColor = System.Drawing.Color.Transparent;
+            this.uilabok.DecimalPlaces = 0;
+            this.uilabok.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uilabok.ForeColor = System.Drawing.Color.Lime;
+            this.uilabok.Location = new System.Drawing.Point(63, 444);
+            this.uilabok.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uilabok.Name = "uilabok";
+            this.uilabok.Size = new System.Drawing.Size(107, 36);
+            this.uilabok.TabIndex = 26;
+            this.uilabok.Text = "uiDigitalLabel1";
+            // 
+            // uilabng
+            // 
+            this.uilabng.BackColor = System.Drawing.Color.Transparent;
+            this.uilabng.DecimalPlaces = 0;
+            this.uilabng.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uilabng.ForeColor = System.Drawing.Color.Red;
+            this.uilabng.Location = new System.Drawing.Point(63, 513);
+            this.uilabng.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uilabng.Name = "uilabng";
+            this.uilabng.Size = new System.Drawing.Size(107, 36);
+            this.uilabng.TabIndex = 27;
+            this.uilabng.Text = "uiDigitalLabel2";
             // 
             // FrmMain
             // 
@@ -698,6 +726,8 @@
             this.ClientSize = new System.Drawing.Size(1536, 864);
             this.CloseAskString = "确定退出？";
             this.ControlBox = false;
+            this.Controls.Add(this.uilabng);
+            this.Controls.Add(this.uilabok);
             this.Controls.Add(this.uiLabel12);
             this.Controls.Add(this.uiLabel9);
             this.Controls.Add(this.btnSpeedSet);
@@ -707,7 +737,7 @@
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.uiPanel1);
             this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.rpDevBreadDown);
+            this.Controls.Add(this.rpPassRate);
             this.Controls.Add(this.devCountBarChart);
             this.Controls.Add(this.uiLine6);
             this.Controls.Add(this.uiLine3);
@@ -772,7 +802,7 @@
         private Sunny.UI.UISymbolButton btnMin;
         private Sunny.UI.UIBarChart devCountBarChart;
         private Sunny.UI.UILabel uiLabel11;
-        private Sunny.UI.UIRoundProcess rpDevBreadDown;
+        private Sunny.UI.UIRoundProcess rpPassRate;
         private Sunny.UI.UIComboBox SolComboBox;
         private Sunny.UI.UIPanel uiPanel1;
         private ImageControl.ViewPanel MPanel;
@@ -787,6 +817,8 @@
         private Sunny.UI.UISymbolButton btnSpeedSet;
         private Sunny.UI.UILabel uiLabel9;
         private Sunny.UI.UILabel uiLabel12;
+        private Sunny.UI.UIDigitalLabel uilabok;
+        private Sunny.UI.UIDigitalLabel uilabng;
     }
 }
 

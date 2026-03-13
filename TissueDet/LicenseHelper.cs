@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,6 +7,15 @@ public static class LicenseHelper
 {
     // 公钥
     private const string PublicKey = @"<RSAKeyValue><Modulus>ul8OX5YR9SmvN/+uN71G7+gKJqP7hMjctUd2mn0JaCvZMNqhUr6xKtMC4U77/RuXyS5V/1BrXmOZ57lUQqiswhQUV2wzUpACHFgqSNiF8OGevU1SrRtSDKNSNbgj7Roxsm8Enkrgm92Qi4gUV/c4Ut/o7Pt3bJeAea2iwkcH6U/RPQUgM0HaGZdgrLp3F/K8yYkP3ZbC7XkpqmCYV4BZ9vV07SEWygCrpI7EgiG5PMY4QYwLHjXFauM+aHkaycp3nOJLrXjW+T/zbqXFZnuCX6rdcTwp+UAABc1O/c2Oo8cR8uDc5Q+TJvUA+FN27kX1AHgzi5dLuM0efgeIffCO8Q==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
+
+    /// <summary>
+    /// 获取授权文件完整路径。
+    /// 统一放在程序根目录，避免从不同工作目录启动时读写到错误位置。
+    /// </summary>
+    public static string GetLicenseFilePath()
+    {
+        return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "detkey.xml");
+    }
 
     // 获取机器码 
     public static string GetMachineCode()

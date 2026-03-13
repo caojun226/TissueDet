@@ -25,8 +25,9 @@ namespace TissueDet
 
             if (LicenseHelper.VerifyLicense(inputKey))
             {
-                // 验证成功，保存到本地
-                File.WriteAllText("detkey.xml", inputKey);
+                // 验证成功后，统一保存到程序根目录。
+                // 这样主程序读取与注册窗口写入使用同一路径，避免路径不一致问题。
+                File.WriteAllText(LicenseHelper.GetLicenseFilePath(), inputKey);
 
                 this.DialogResult = DialogResult.OK; // 通知 Main 方法可以启动主程序了
                 this.Close();

@@ -12,13 +12,15 @@ namespace TissueDet
     {
         public static bool Init()
         {
-            //step1:尝试打开IO口，失败后即刻返回
+            // step1: 尝试打开 IO 口，失败后直接返回 false。
+            // 旧实现无论打开是否成功都返回 true，调用方无法判断初始化真实状态。
             bool r1 = OpenIo();
             if (!r1)
             {
-                LogNet.Error("IO卡打开失败,");
+                LogNet.Error("IO卡打开失败");
+                return false;
             }
-            else { LogNet.Info("IO卡加载成功"); }
+            LogNet.Info("IO卡加载成功");
             return true;
         }
         public static bool OpenIo()
@@ -38,16 +40,24 @@ namespace TissueDet
                 }
                 return true;
             }
-            catch (Exception                                 e)
+            catch (Exception e)
             {
+                LogNet.Error("IO卡打开异常：" + e.Message);
                 return false;
             }
         }
         public static bool CloseIo()
         {
-            int Result;
-            Result = WENYU_EIO32P.Program.WY_Close();
-            return true;
+            try
+            {
+                // 约定返回 0 表示调用成功完成。
+                return WENYU_EIO32P.Program.WY_Close() == 0;
+            }
+            catch (Exception e)
+            {
+                LogNet.Error("IO卡关闭异常：" + e.Message);
+                return false;
+            }
         }
 
     }

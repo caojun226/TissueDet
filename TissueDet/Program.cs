@@ -18,10 +18,8 @@ namespace TissueDet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // 定义授权文件路径 (建议结合应用程序根目录，防止从其他位置启动时找不到文件)
-            // string appPath = Application.StartupPath;
-            // string filePath = Path.Combine(appPath, "detkey.xml");
-            string filePath = "detkey.xml";
+            // 统一使用程序根目录中的授权文件，避免工作目录变化导致读取失败。
+            string filePath = LicenseHelper.GetLicenseFilePath();
             string savedKey = null;
 
             // 1. 尝试读取本地授权码
@@ -29,12 +27,10 @@ namespace TissueDet
             {
                 try
                 {
-                    // 修正：使用变量 filePath 而不是硬编码字符串
                     savedKey = File.ReadAllText(filePath);
                 }
                 catch (Exception ex)
                 {
-                    // 记录日志或处理读取异常（例如文件被占用）
                     MessageBox.Show($"读取授权文件失败: {ex.Message}");
                 }
             }

@@ -13,9 +13,9 @@ public static class HardwareInfo
     {
         try
         {
-            // 1. 获取 CPU ID
+            // 机器码由多个硬件标识组合后再计算哈希。
+            // 这样可以避免直接暴露原始硬件信息，同时保持长度固定。
             string cpuId = GetCpuId();
-            // 2. 获取主板序列号
             string mbSerial = GetMotherboardSerial();
 
             // 为了防止其中一项为空导致冲突，做个简单的检查
@@ -37,25 +37,38 @@ public static class HardwareInfo
     }
 
     /// <summary>
+    /// 统一读取 WMI 属性，减少重复代码并避免属性为空时触发空引用异常。
+    /// </summary>
+    private static string ReadWmiProperty(string className, string propertyName)
+    {
+        try
+        {
+            using (ManagementClass mc = new ManagementClass(className))
+            using (ManagementObjectCollection moc = mc.GetInstances())
+            {
+                foreach (ManagementObject mo in moc)
+                {
+                    var property = mo.Properties[propertyName];
+                    if (property != null && property.Value != null)
+                    {
+                        return property.Value.ToString();
+                    }
+                }
+            }
+        }
+        catch
+        {
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>
     /// 获取 CPU 处理器 ID
     /// </summary>
     private static string GetCpuId()
     {
-        string cpuInfo = "";
-        try
-        {
-            // 查询 Win32_Processor
-            ManagementClass mc = new ManagementClass("Win32_Processor");
-            ManagementObjectCollection moc = mc.GetInstances();
-
-            foreach (ManagementObject mo in moc)
-            {
-                cpuInfo = mo.Properties["ProcessorId"].Value.ToString();
-                break; 
-            }
-        }
-        catch { }
-        return cpuInfo;
+        return ReadWmiProperty("Win32_Processor", "ProcessorId");
     }
 
     /// <summary>
@@ -63,21 +76,7 @@ public static class HardwareInfo
     /// </summary>
     private static string GetMotherboardSerial()
     {
-        string serial = "";
-        try
-        {
-            // 查询 Win32_BaseBoard
-            ManagementClass mc = new ManagementClass("Win32_BaseBoard");
-            ManagementObjectCollection moc = mc.GetInstances();
-
-            foreach (ManagementObject mo in moc)
-            {
-                serial = mo.Properties["SerialNumber"].Value.ToString();
-                break;
-            }
-        }
-        catch { }
-        return serial;
+        return ReadWmiProperty("Win32_BaseBoard", "SerialNumber");
     }
 
     /// <summary>
